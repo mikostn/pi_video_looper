@@ -30,7 +30,7 @@ class rsyncDirectoryReader(object):
         # called in a tight loop of the main program so it needs to be fast and
         # not resource intensive.
         if os.path.isfile(self._sync_flag):
-            logging.info(self._sync_flag + '...')
+            logging.info("Sync flag... was set: {0}", self._sync_flag )
             try:
                 os.remove(self._sync_flag)
                 return True
