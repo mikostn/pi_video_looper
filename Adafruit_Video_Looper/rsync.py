@@ -34,7 +34,7 @@ class rsyncDirectoryReader(object):
 
     def idle_message(self):
         """Return a message to display when idle and no files are found."""
-        return 'No files found in {0}'.format(self._path)
+        return 'No files found'
 
 
 def create_file_reader(config):
