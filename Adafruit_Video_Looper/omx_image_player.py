@@ -180,7 +180,7 @@ class OMXImagePlayer(object):
         if loop:
             # Add loop parameter if necessary.
             args.append('-t ' + str(self._image_display_time))
-        else :
+        else:
             # display time
             args.extend(['-1', '-t', str(self._image_display_time)])
 

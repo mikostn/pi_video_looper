@@ -1,7 +1,10 @@
 # Copyright 2015 Adafruit Industries.
 # Author: Tony DiCola mod by mikostn
 # License: GNU GPLv2, see LICENSE.txt
-import logging, os
+import logging
+import os
+
+
 class rsyncDirectoryReader(object):
 
     def __init__(self, config):
@@ -11,8 +14,8 @@ class rsyncDirectoryReader(object):
         self._load_config(config)
 
     def _load_config(self, config):
-        self._path = config.get('directory', 'path')
-        self._sync_flag = self._path + '/' + '.sync'
+        self._path = config.get('rsync', 'path')
+        self._sync_flag = self._path + '/' + config.get('rsync', 'flag_file')
         logging.debug('Media path: {0}'.format(self._path))
 
     def search_paths(self):
@@ -27,6 +30,7 @@ class rsyncDirectoryReader(object):
         # called in a tight loop of the main program so it needs to be fast and
         # not resource intensive.
         if os.path.isfile(self._sync_flag):
+            logging.info(self._sync_flag + '...')
             os.remove(self._sync_flag)
             return True
         else:
