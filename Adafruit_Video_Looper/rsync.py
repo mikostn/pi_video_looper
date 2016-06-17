@@ -1,6 +1,7 @@
 # Copyright 2015 Adafruit Industries.
-# Author: Tony DiCola
+# Author: Tony DiCola mod by mikostn
 # License: GNU GPLv2, see LICENSE.txt
+import logging, os
 class rsyncDirectoryReader(object):
 
     def __init__(self, config):
@@ -11,6 +12,8 @@ class rsyncDirectoryReader(object):
 
     def _load_config(self, config):
         self._path = config.get('directory', 'path')
+        self._sync_flag = self._path + '/' + '.sync'
+        logging.debug('Media path: {0}'.format(self._path))
 
     def search_paths(self):
         """Return a list of paths to search for files."""
@@ -23,8 +26,11 @@ class rsyncDirectoryReader(object):
         # true if new files are added/removed from the directory.  This is
         # called in a tight loop of the main program so it needs to be fast and
         # not resource intensive.
-       return False
-        # return True
+        if os.path.isfile(self._sync_flag):
+            os.remove(self._sync_flag)
+            return True
+        else:
+            return False
 
     def idle_message(self):
         """Return a message to display when idle and no files are found."""
