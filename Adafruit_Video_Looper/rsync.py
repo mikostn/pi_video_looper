@@ -31,8 +31,12 @@ class rsyncDirectoryReader(object):
         # not resource intensive.
         if os.path.isfile(self._sync_flag):
             logging.info(self._sync_flag + '...')
-            os.remove(self._sync_flag)
-            return True
+            try:
+                os.remove(self._sync_flag)
+                return True
+            except Exception as e:
+                logging.error("Unexpected exception! %s",e)
+                return False
         else:
             return False
 
