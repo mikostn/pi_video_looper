@@ -219,6 +219,7 @@ class VideoLooper(object):
             # Check for changes in the file search path (like USB drives added)
             # and rebuild the playlist.
             if self._reader.is_changed():
+                logging.debug("render play list")
                 self._player.stop(3)  # Up to 3 second delay waiting for old
                                       # player to stop.
                 # Rebuild playlist and show countdown again (if OSD enabled).
