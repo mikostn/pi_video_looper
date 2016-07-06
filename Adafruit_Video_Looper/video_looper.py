@@ -54,7 +54,7 @@ class VideoLooper(object):
         # Load other configuration values.
         self._osd = self._config.getboolean('video_looper', 'osd')
         self._is_random = self._config.getboolean('video_looper', 'is_random')
-        # Parse string of 3 comma separated values like "255, 255, 255" into
+        # Parse string of 3 comma separated values like "255, 255, 255" into 
         # list of ints for colors.
         self._bgcolor = map(int, self._config.get('video_looper', 'bgcolor') \
                                              .translate(None, ',') \
@@ -98,11 +98,11 @@ class VideoLooper(object):
 
     def _is_number(iself, s):
         try:
-            float(s)
+            float(s) 
             return True
         except ValueError:
             return False
-
+    
     def _build_playlist(self):
         """Search all the file reader paths for movie files with the provided
         extensions.
@@ -120,7 +120,7 @@ class VideoLooper(object):
                 # key from an OSX computer
                 movies.extend(['{0}/{1}'.format(path.rstrip('/'), x) \
                                for x in os.listdir(path) \
-                               if re.search('\.{0}$'.format(ex), x,
+                               if re.search('\.{0}$'.format(ex), x, 
                                             flags=re.IGNORECASE) and \
                                x[0] is not '.'])
                 # Get the video volume from the file in the usb key
@@ -152,7 +152,7 @@ class VideoLooper(object):
         message if the on screen display is enabled.
         """
         # Print message to console with number of movies in playlist.
-        message = 'Found {0} movie{1}.'.format(playlist.length(),
+        message = 'Found {0} movie{1}.'.format(playlist.length(), 
             's' if playlist.length() >= 2 else '')
         self._print(message)
         # Do nothing else if the OSD is turned off.
@@ -219,8 +219,7 @@ class VideoLooper(object):
             # Check for changes in the file search path (like USB drives added)
             # and rebuild the playlist.
             if self._reader.is_changed():
-                logging.debug("render play list")
-                self._player.stop(3)  # Up to 3 second delay waiting for old
+                self._player.stop(3)  # Up to 3 second delay waiting for old 
                                       # player to stop.
                 # Rebuild playlist and show countdown again (if OSD enabled).
                 playlist = self._build_playlist()
@@ -235,24 +234,19 @@ class VideoLooper(object):
             self._player.stop()
         pygame.quit()
 
-import logging
-logging.basicConfig(filename='./player.log', level=logging.DEBUG)
 
 # Main entry point.
 if __name__ == '__main__':
-    try:
-        print('Starting Adafruit Video Looper.')
-        # Default config path to /boot.
-        config_path = '/boot/video_looper.ini'
-        # Override config path if provided as parameter.
-        if len(sys.argv) == 2:
-            config_path = sys.argv[1]
-        # Create video looper.
-        videolooper = VideoLooper(config_path)
-        # Configure signal handlers to quit on TERM or INT signal.
-        signal.signal(signal.SIGTERM, videolooper.signal_quit)
-        signal.signal(signal.SIGINT, videolooper.signal_quit)
-        # Run the main loop.
-        videolooper.run()
-    except Exception as e:
-        logging.error("Unexpected exception! %s",e)
+    print('Starting Adafruit Video Looper.')
+    # Default config path to /boot.
+    config_path = '/boot/video_looper.ini'
+    # Override config path if provided as parameter.
+    if len(sys.argv) == 2:
+        config_path = sys.argv[1]
+    # Create video looper.
+    videolooper = VideoLooper(config_path)
+    # Configure signal handlers to quit on TERM or INT signal.
+    signal.signal(signal.SIGTERM, videolooper.signal_quit)
+    signal.signal(signal.SIGINT, videolooper.signal_quit)
+    # Run the main loop.
+    videolooper.run()
