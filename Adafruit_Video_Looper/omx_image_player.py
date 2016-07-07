@@ -126,7 +126,7 @@ class OMXImagePlayer(object):
     def play(self, media_file, loop=False, vol=0):
         t1 = time.time()
         self.stop(3)  # Up to 3 second delay to let the old player stop.
-        logging.debug('Time palyer stoped: {0}'.format(time.time() - t1))
+        logging.debug('Time player stoped: {0}'.format(time.time() - t1))
 
         if media_file.lower().endswith(".jpg") or media_file.lower().endswith(".gif"):
             self._print('Display image: {0}'.format(media_file))
@@ -136,7 +136,7 @@ class OMXImagePlayer(object):
             self._print('Display video: {0}'.format(media_file))
             self._display_video(media_file, loop=False, vol=0)
             logging.debug(
-                'Time video  displayed: {0}'.format(time.time() - t1))
+                'Time video displayed: {0}'.format(time.time() - t1))
 
     def _display_with_pygame(self, imagefile):
         try:
